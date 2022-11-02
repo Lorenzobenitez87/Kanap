@@ -1,5 +1,6 @@
 ////////////    AFFICHAGE DES PRODUITS  ////////////
 
+// On crée deux constante, une pour les produit de l'API et une pour les produit sélectionné dans le local storage
 let PRODUCTS_API;
 let PRODUCTS_LS;
 

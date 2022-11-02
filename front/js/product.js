@@ -95,8 +95,8 @@ function addBasket() {
 
     // Contrôle quantité compris entre 1 et 100 et la selection d'une couleur.
     if (input.value > 100) {
-        input.value = 100;
-        return;
+        input.value = 100  
+      return 
     }
     if (input.value == 0) {
         alert("Veuillez selectionner une quantitée pour continuer");
@@ -152,14 +152,14 @@ function main() {
     let id = getId();
 
     // on requète l'API avec fetch, on demande les infos du produit ayant l'id récupéré.
-    if (id) {
+   
     let url = "http://localhost:3000/api/products/";
     fetchKanap(url, id);
 
     //Le click au bouton ajouter au panier éxécute la fonction addBasket
     let bouton = document.getElementById('addToCart');
     bouton.addEventListener("click", addBasket);
-}
+
 }
 
 main();
