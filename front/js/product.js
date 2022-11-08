@@ -43,7 +43,8 @@ function showProduit(produit) {
 
     //déclaration
     let img = document.createElement("img");
-
+    let input = document.getElementById("quantity");
+    
     //initiation
     document.querySelector(".item__img").appendChild(img);
     //contrôle variable produit
@@ -70,7 +71,13 @@ function showProduit(produit) {
         option.value = color;
         option.innerHTML = color;
         select.appendChild(option);
-    });
+    }); 
+
+    // On contrôle la valeur de la quantité selectionné
+    input.addEventListener("input" , function() {
+    if (input.value > 100) {
+        input.value = 100;  
+    }})
 }
 
 
@@ -95,8 +102,7 @@ function addBasket() {
 
     // Contrôle quantité compris entre 1 et 100 et la selection d'une couleur.
     if (input.value > 100) {
-        input.value = 100  
-      return 
+        input.value = 100   
     }
     if (input.value == 0) {
         alert("Veuillez selectionner une quantitée pour continuer");
