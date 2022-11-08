@@ -82,9 +82,9 @@ function showProduit(produit) {
 
 
 ////* Fonction Ajouter au panier, on créer un objet contenant l'id, la couleur et la quantité d'un produit.//
-// On verifie si une couleur et une quantitée ont bien été selectionné.//////////////////////////////////////
-// On vérifie si il éxiste un produit dans l'objet avec la même id et couleur au quel cas on ne change///////
-// que la quantité de celui-ci sinon on ajoute une instance. Contrôle pas plus de 100 produits. *////////////
+// On verifie si une couleur et une quantité ont bien été selectionné.//////////////////////////////////////
+// On vérifie si il éxiste un produit dans l'objet product-board avec la même id et couleur au quel cas///////
+// on ne change que la quantité de celui-ci sinon on ajoute une instance. Contrôle pas plus de 100 produits.*////////////
 function addBasket() {
 
     // On récupère la clef produit dans le local storage puis traiter par JSON.parse
@@ -112,7 +112,6 @@ function addBasket() {
         alert("Veuillez selectionner une couleur pour continuer");
         return false
     } 
-
     if (productBoard == null) {
         productBoard = [];
         productBoard.push(fusionProduitColor);

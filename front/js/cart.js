@@ -419,7 +419,6 @@ function CheckFirstName(data) {
         firstNameErrorMsg.innerHTML = msg;
         return false;
     }
-
     return true;
 }
 
@@ -537,14 +536,12 @@ function CheckEmail(data) {
         emailErrorMsg.innerHTML = msg;
         return false;
     }
-
     if (!data.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
         msg = "Email incorrect (ex: boby@hotmail.fr)";
         console.log(msg);
         emailErrorMsg.innerHTML = msg;
         return false;
     }
-
     return true;
 }
 

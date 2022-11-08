@@ -15,7 +15,8 @@ const fetchKanap = async (url) => {
 }
 
 
-// Fonction boucle sur kanaps afin de séparer chaque kanap(info individuel) des kanaps.
+// Fonction boucle sur kanaps afin de créer un objet de chaque kanap(info individuel) 
+// du tableau kanaps.
 function showKanaps(kanaps) {
 
     //contrôle de la variable kanaps si elle est vide
