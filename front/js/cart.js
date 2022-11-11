@@ -46,9 +46,9 @@ function deleteInLS(id, color) {
     let productBoard = JSON.parse(localStorage.getItem("produit"));
 
     if (productBoard.length == 1) {
-        return (
-            localStorage.removeItem("produit")
-        )
+        location.href = "./cart.html"
+        window.localStorage.removeItem("produit")
+        return
     } else {
         productFind = productBoard.filter((el) => {
             if (id != el.id || color != el.color) {
@@ -56,10 +56,8 @@ function deleteInLS(id, color) {
             }
         })
     }
-
     localStorage.setItem("produit", JSON.stringify(productFind))
-    location.href = "./cart.html"
-    return;
+    window.location.href = "./cart.html"
 }
 
 
@@ -164,7 +162,7 @@ function showCart(cartLS) {
     div_cart_item_content_description.classList.add("cart__item__content__description");
     h2.innerHTML = cartAPI.name;
     p_color.innerHTML = cartLS.color;
-    p_price.innerHTML = cartAPI.price;
+    p_price.innerHTML = cartAPI.price + " €";
     div_cart_item_content_settings.classList.add("cart__item__content__settings");
     div_cart_item_content_settings_quantity.classList.add("cart__item__content__settings__quantity");
     input.type = "number";
@@ -181,8 +179,8 @@ function showCart(cartLS) {
     div_cart_item_content_settings_delete.classList.add("cart__item__content__settings__delete");
     p_deleteItem.classList.add("deleteItem");
     p_deleteItem.innerHTML = ("Supprimer");
-        // propriété onclick qui appel la fonction deleteInLS à l'écoute de l'input.
-    p_deleteItem.setAttribute("onclick", "deleteInLS('" + cartLS.id + "','" + cartLS.color + "')")
+    // propriété onclick qui appel la fonction deleteInLS à l'écoute du click.
+    p_deleteItem.setAttribute("onclick", "deleteInLS('" + cartLS.id + "','" + cartLS.color + "',this)")
 }
 
 
@@ -270,7 +268,7 @@ function AddEventToButton() {
 
     const btn = document.getElementById("order");
     btn.addEventListener("click", function (e) {
-        confirmer();     
+        confirmer();
     });
 }
 
@@ -278,28 +276,28 @@ function AddEventToButton() {
 // Contrôle des valeurs du formulaire, si ok, envoi des données au back et récupération du numéro 
 // de commande (orderId).
 function confirmer() {
-    
+
     //récupération des valeurs du formulaire pour les mettre dans le local storage  
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
     const address = document.getElementById("address").value;
     const city = document.getElementById("city").value;
     const email = document.getElementById("email").value;
-    
+
     // controle des valeurs du formulaire
     if (!CheckFirstName(firstName) || !CheckLastName(lastName) || !CheckAddress(address) ||
-    !CheckCity(city) || !CheckEmail(email)) {
+        !CheckCity(city) || !CheckEmail(email)) {
         alert("Merci de remplir le formulaire correctement");
         return
     } else {
-        
+
         // Mettre dans un objet les values du formulaire et l'id des produits commandés
         let commandeFinal = PRODUCTS_LS
         let commandeId = [];
         commandeFinal.forEach((commande) => {
             commandeId.push(commande.id)
         })
-        
+
         const data = {
             contact: {
                 firstName: firstName,
@@ -310,11 +308,11 @@ function confirmer() {
             },
             products: commandeId,
         }
-          
+
         /////////////////     FETCH POST      ///////////////////////////
         // envoi des données au back et récupération du numéro de commande
-        
-        
+
+
         fetch("http://localhost:3000/api/products/order", {
             method: "POST",
             headers: {
@@ -323,21 +321,21 @@ function confirmer() {
             },
             body: JSON.stringify(data),
         })
-        .then(function (res) {
-            if (res.ok) {
-                location.href = "./confirmation.html.order_id=" + res;
-                return res.json()
-            }
-        })
-        
-        .then((promise) => {
-            localStorage.clear();
-            location.href = "./confirmation.html?order_id=" + promise.orderId;
-            return
-        })
-        .catch((error) => {
-            return res.status(500).json(new Error(error))
-        }) 
+            .then(function (res) {
+                if (res.ok) {
+                    location.href = "./confirmation.html.order_id=" + res;
+                    return res.json()
+                }
+            })
+
+            .then((promise) => {
+                localStorage.clear();
+                location.href = "./confirmation.html?order_id=" + promise.orderId;
+                return
+            })
+            .catch((error) => {
+                return res.status(500).json(new Error(error))
+            })
     }
 }
 

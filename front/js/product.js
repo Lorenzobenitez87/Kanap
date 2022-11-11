@@ -18,7 +18,7 @@ const fetchKanap = async (url, id) => {
         // Message d'erreur pour l'utilisateur et la console
         showMessageForUser("Merci de revenir plus tard", "fetchKanap", "erreur au niveau du back");
         return;
-    } 
+    }
 
     // Action on attend la reponse, qui sera traité par json(), avant d'être exécuté dans 
     // la fonction showProduit
@@ -44,7 +44,7 @@ function showProduit(produit) {
     //déclaration
     let img = document.createElement("img");
     let input = document.getElementById("quantity");
-    
+
     //initiation
     document.querySelector(".item__img").appendChild(img);
     //contrôle variable produit
@@ -53,16 +53,16 @@ function showProduit(produit) {
         showMessageForUser("Merci de revenir plus tard", "showProduit", "la variable produit est vide");
         return;
     }
-    
+
     //action injection JS descriptif produit
     document.title = produit.name;
     document.getElementById("title").innerHTML = produit.name;
     img.setAttribute("src", produit.imageUrl);
     img.setAttribute("alt", produit.altTxt);
-    document.getElementById("price").innerHTML = produit.price;
+    document.getElementById("price").innerHTML = produit.price + " ";
     document.getElementById("description").innerHTML = produit.description;
 
-    
+
     let select = document.getElementById("colors");
     // On fait une boucle pour afficher les couleurs du Tableau product.colors
     // dans les valeurs selectionnables en options
@@ -71,13 +71,14 @@ function showProduit(produit) {
         option.value = color;
         option.innerHTML = color;
         select.appendChild(option);
-    }); 
+    });
 
     // On contrôle la valeur de la quantité selectionné
-    input.addEventListener("input" , function() {
-    if (input.value > 100) {
-        input.value = 100;  
-    }})
+    input.addEventListener("input", function () {
+        if (input.value > 100) {
+            input.value = 100;
+        }
+    })
 }
 
 
@@ -102,7 +103,7 @@ function addBasket() {
 
     // Contrôle quantité compris entre 1 et 100 et la selection d'une couleur.
     if (input.value > 100) {
-        input.value = 100   
+        input.value = 100
     }
     if (input.value == 0) {
         alert("Veuillez selectionner une quantitée pour continuer");
@@ -111,7 +112,7 @@ function addBasket() {
     if (select.value == "") {
         alert("Veuillez selectionner une couleur pour continuer");
         return false
-    } 
+    }
     if (productBoard == null) {
         productBoard = [];
         productBoard.push(fusionProduitColor);
@@ -136,6 +137,15 @@ function addBasket() {
         }
     }
 
+    // message utilisateur, s'il veut aller au panier ou bien continuer ses achats.
+    var dialog = confirm("Le produit sélectionné a bien été rajouté au panier. Voulez vous aller au panier ?");
+    if (dialog) {
+        window.location.href = "./cart.html"
+    }
+    else {
+        window.location.href = "./index.html"
+    }
+   
     // On envoie dans le local storage en créant clef = produit ; valeur = productBoard
     localStorage.setItem("produit", JSON.stringify(productBoard));
     return (productBoard = JSON.parse(localStorage.getItem("produit")));
@@ -157,7 +167,7 @@ function main() {
     let id = getId();
 
     // on requète l'API avec fetch, on demande les infos du produit ayant l'id récupéré.
-   
+
     let url = "http://localhost:3000/api/products/";
     fetchKanap(url, id);
 
